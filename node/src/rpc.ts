@@ -21,6 +21,7 @@ export async function createJSONRPCServer(settings: PastaSettings) {
     const folder = await settings.getFolder(id);
 
     if (folder) {
+      console.debug(`[pasta-cloud] Share code for ${id}: ${code}`);
       folder.shareCode = code;
     }
   };
