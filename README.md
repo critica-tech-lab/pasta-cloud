@@ -2,11 +2,9 @@
 
 Cloud services for Pasta
 
-### Build instructions
-
-```bash
+### Try it
+Docker images are available through [GitHub container registry](ghcr.io/critica-tech-lab/pasta-cloud)
+```
 mkdir ~/pasta
-
-docker build -t pasta-cloud .
-docker run -v ~/pasta:/pasta -p 8000:8000 pasta-cloud
+docker run -v ~/pasta:/pasta -p 8000:8000 ghcr.io/critica-tech-lab/pasta-cloud
 ```
