@@ -1,0 +1,30 @@
+{
+  "name": "@pasta/cloud",
+  "version": "0.1.0",
+  "description": "Cloud services for Pasta apps",
+  "type": "module",
+  "main": "dist/main.js",
+  "bin": {
+    "pasta-cloud": "dist/main.js"
+  },
+  "scripts": {
+    "lint": "tsc",
+    "build": "esbuild src/main.ts --bundle --minify --format=esm --platform=node --inject:require.js --banner:js=\"#!/usr/bin/env node\" --outfile=dist/main.js",
+    "dev": "tsx --watch src/main.ts"
+  },
+  "author": "Hector Vergara",
+  "license": "AGPL-3.0-only",
+  "devDependencies": {
+    "@types/node": "^20.8.6",
+    "@types/ws": "^8.18.1",
+    "@types/yargs": "^17.0.33",
+    "esbuild": "^0.25.10",
+    "tsx": "^4.20.6",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "json-rpc-2.0": "^1.7.1",
+    "ws": "^8.18.3",
+    "yargs": "^18.0.0"
+  }
+}
