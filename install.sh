@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ARCH=$(uname -m)
 TARBALL_URL=https://github.com/ethersync/ethersync/releases/download/$ETHERSYNC_VERSION/ethersync-$ARCH-unknown-linux-musl.tar.gz
 
