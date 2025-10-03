@@ -2,6 +2,7 @@ import { ChildProcess, spawn } from "child_process";
 import { chmod, mkdir, stat } from "fs/promises";
 import { join } from "path";
 import type { PastaSettings } from "../settings";
+import { log } from "../logging";
 
 const ETHERSYNC_FOLDER_MODE = 0o700;
 const ETHERSYNC_JOIN_CODE_REGEX = /ethersync join ([\w-]+)/;
@@ -41,14 +42,14 @@ export class NodeAdapter {
     const instance = this.instances.has(id);
 
     if (instance) {
-      console.error("onStart: unable to start, already running");
+      log.error("ethersync:", "unable to start, already running");
       return;
     }
 
     const folder = await this.settings.getFolder(id);
 
     if (!folder) {
-      console.error(`onStart: unable to find config for "${id}"`);
+      log.error("ethersync:", `unable to find config for "${id}"`);
       return;
     }
 
@@ -62,7 +63,7 @@ export class NodeAdapter {
       args.push(joinCode);
     }
 
-    console.warn("ethersync", ...args);
+    log.debug("ethersync", "Starting ethersync binary with args:", ...args);
 
     const proc = spawn("ethersync", args);
 
@@ -75,7 +76,11 @@ export class NodeAdapter {
     });
 
     proc.stderr.on("data", (data: ArrayBuffer) => {
-      console.error(`ethersync error (${id}) >`, data.toString().trim());
+      log.error(
+        "onStart",
+        `ethersync process error (${id}) >`,
+        data.toString().trim(),
+      );
     });
 
     this.instances.set(id, { process: proc });
@@ -93,7 +98,7 @@ export class NodeAdapter {
 
   async onJoin({ id, code }: JoinParams) {
     if (await this.settings.hasFolder(id)) {
-      console.error("onJoin: folder already exists");
+      log.error("onJoin", "folder already exists");
       return;
     }
 
@@ -108,7 +113,7 @@ export class NodeAdapter {
 
   async onShare({ id }: ShareParams) {
     if (await this.settings.hasFolder(id)) {
-      console.error("onShare: folder already exists");
+      log.error("onShare", "folder already exists");
       return;
     }
 

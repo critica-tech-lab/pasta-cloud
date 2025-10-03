@@ -2,9 +2,10 @@ import { lstatSync } from "node:fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { startPastaServer } from "./server";
+import { log } from "./logging";
 
 function shutdown() {
-  console.debug("Stopping Pasta Cloud server...");
+  log.debug("shutdown", "Stopping Pasta Cloud server...");
   process.exit(0);
 }
 

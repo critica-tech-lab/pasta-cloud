@@ -2,6 +2,7 @@ import { JSONRPCServer, type JSONRPCParams } from "json-rpc-2.0";
 import { WebSocket } from "ws";
 import { NodeAdapter, type NodeInstance } from "./adapters/node";
 import { PastaSettings } from "./settings";
+import { log } from "./logging";
 
 enum Method {
   Join = "join",
@@ -21,7 +22,7 @@ export async function createJSONRPCServer(settings: PastaSettings) {
     const folder = await settings.getFolder(id);
 
     if (folder) {
-      console.debug(`[pasta-cloud] Share code for ${id}: ${code}`);
+      log.debug("ethersync", `Share code for ${id}: ${code}`);
       folder.shareCode = code;
     }
   };
@@ -52,7 +53,7 @@ export function setupConnection(ws: WebSocket, rpc: JSONRPCServer) {
         ws.send(JSON.stringify(result));
       }
     } catch (e) {
-      console.warn("error when receiving JSON-RPC message", e);
+      log.warn("rpc", "error when receiving JSON-RPC message", e);
     }
   });
 }
