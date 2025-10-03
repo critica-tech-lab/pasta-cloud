@@ -1,29 +1,33 @@
 # Pasta Cloud
 
-Cloud services for Pasta
+Pasta Cloud is a small service that lets you run and manage [Ethersync](https://ethersync.github.io/) folders from one place. It provides a JSON-RPC API so other tools can automate common tasks such as sharing a folder, joining an existing share, or starting and stopping local daemons.
 
-> [!IMPORTANT]
-> Pasta Cloud is in an early & experimental stage. Use at your own risk and do not store critical data.
+> [^IMPORTANT]
+> This project is experimental and still changing quickly. It is not ready for production use. Expect breaking changes, limited documentation, and rough edges. Do not rely on it for critical data.
 
-### Try it
+## Run it with Docker
 
-Docker images are available through [GitHub container registry](ghcr.io/critica-tech-lab/pasta-cloud)
+Pre-built images are published to the [GitHub Container Registry](https://ghcr.io/critica-tech-lab/pasta-cloud). The snippet below starts Pasta Cloud locally, storing folder contents in `~/pasta`:
 
+```bash
+mkdir -p ~/pasta
+
+docker run \
+  -v ~/pasta:/pasta \
+  -p 8000:8000 \
+  ghcr.io/critica-tech-lab/pasta-cloud
 ```
-mkdir ~/pasta
-docker run -v ~/pasta:/pasta -p 8000:8000 ghcr.io/critica-tech-lab/pasta-cloud
-```
 
-### Design
+The API will be available at `http://localhost:8000/rpc`.
 
-Pasta Cloud exposes a JSON-RPC API to manage Ethersync instances (inspired by [Ethersync Client](https://ethersync.github.io/ethersync/editor-plugin-dev-guide.html) API)
+## Design
 
-The following methods are supported:
+Pasta Cloud exposes a JSON-RPC endpoint (inspired by [Ethersync Client API](https://ethersync.github.io/ethersync/editor-plugin-dev-guide.html)).
 
-- `share` - Share a folder through the [iroh network](https://www.iroh.computer/) using Ethersync.
-- `join` - Join a remote folder.
-- `start` - Start an Ethersync daemon for a folder (mode: join or share).
-- `stop` - Stop sharing or joining a folder.
-- `list` - Return a list of folders managed by Pasta Cloud.
+The following methods are available:
 
-The JSON-RPC API is served at `https://<PASTA-HOST>/rpc`
+- `share`: share a local folder through the [iroh network](https://www.iroh.computer/) using Ethersync.
+- `join`: connect to a folder shared by another peer.
+- `start`: launch an Ethersync daemon for a folder.
+- `stop`: stop Ethersync daemon for a folder.
+- `list`: return a list of folders managed by Pasta Cloud.
