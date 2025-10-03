@@ -2,7 +2,7 @@
 
 Pasta Cloud is a small service that lets you run and manage [Ethersync](https://ethersync.github.io/) folders from one place. It provides a JSON-RPC API so other tools can automate common tasks such as sharing a folder, joining an existing share, or starting and stopping local daemons.
 
-> [^IMPORTANT]
+> [!IMPORTANT]
 > This project is experimental and still changing quickly. It is not ready for production use. Expect breaking changes, limited documentation, and rough edges. Do not rely on it for critical data.
 
 ## Run it with Docker
